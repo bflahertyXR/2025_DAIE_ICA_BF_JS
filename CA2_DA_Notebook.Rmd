@@ -1,19 +1,86 @@
----
-title: "Comparing the Effectiveness of VR-Based and CBT Interventions for Autism Spectrum Disorder"
+------
+title: "Comparing the Effectiveness of VR-Based and CBT Interventions for Autism Spectrum
+  Disorder"
+author: "Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490)"
+date: "`r Sys.Date()`"
 output: html_notebook
+------
+
+---
+# Data Analytics for Immersive Environments (COMPC9047)
+## Investigating the Impact of Therapeutic Interventions on Austistic Traits using the Autism Spectrum Quotient (AQ)
+
+**Participants:** Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490)
+**Module:** Data Analytics for Immersive Environments (COMPC9047)
+**Date:** `r Sys.Date()`
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+---
+# Table of Contents
+---
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+---
+#Abstract
 
-```{r}
-plot(cars)
-```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+# Introduction
+## Topic and Context
+Briefly describe the Autism Spectrum Disorder (ASD) as a neurodevelopmental spectrum condition and introduce the concept of neurodiversity.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+## Theoretical Framework
+Explain that CBT focuses on cognitive restructuring and social-skills training, whereas VR provides safe, immersive practice of real-world interactions.
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+## Summary of Previous Work
+Cite references from the brief that demonstrate the therapeutic value of CBT and VR.
 
+## Rationale
+Why are we doing this study? This study investigates which method yileds greater improvements in AQ
+
+## Hypotesis
+#### **H1:** After controlling for baseline AQ, there will be no group differences in post-treatment (null-hypothesis)
+
+### **H2:** Both CBT abd VR therapy groups will show significant reductions in AQ scores from pre-treatment to post-treatment, while the control group will not
+
+### **H3:** ???
+
+# Method
+#### **Participants:** 300 adults (M = 150, F = 150), aged 12-40. Random assignment to CBT (n = 100), VR (n = 100), Control (n = 100).
+
+#### **Design:** Mixed 3 (Group: CBT, VR, Control - between subjects) x 2 (Time: Pre, Post - within-subjects) design.
+
+#### **Materials:** Autism Spectrum Quotient (AQ) 50-item questionnaire, scored 0-50.1.
+
+#### **Procedure:** Each participant completed AQ before and after 12 weeks of therapy.
+
++ CBT: Weekly sessions on social/emotional regulation.
+
++ VR: Immersive simulations for social interaction.
+
++ Control: No intervention.
+
+Data recorded in columns P1_Pre_Score and P2_Post_Score.
+
+# Results
+
+### **Data Cleaning**
+
+
+### **Descriptive Statistics**
+#### **Plots**
+
+
+### **Assumption Checks**
+
+### **Hypothesis 1 - **
+
+### **Hypothesis 2 - **
+
+### **Hypothesis 3 - **
+
+### **Confidence Interval - **
+
+
+# Discussion
+---
+
+# References
