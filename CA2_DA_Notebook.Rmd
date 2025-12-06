@@ -2,10 +2,11 @@
 
 title: "Comparing the Effectiveness of VR-Based and CBT Interventions for Autism Spectrum
   Disorder"
-author:  "Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490)"
+author: "Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490)"
 date: "`r Sys.Date()`"
-output:  html_notebook
-
+output:
+  html_document:
+    df_print: paged
 ---
 
 ---
@@ -65,8 +66,23 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 # Results
 
 ### **Data Cleaning**
-```{r}
-
+```{r Data Cleaning}
+# Read the data frames of the .csv file
+df <- read_csv("CA1_Autism_VR_Study_Data_Final.csv")
+# Check the column names
+colnames(df)
+# Change column names to lowercase
+names(df) <- tolower(names(df))
+# Inspect Structure
+glimpse(df)
+# Check for missing values
+sapply(df, function(x) sum(is.na(x)))
+# Check for values outside the scope of the questionnaire - 0 - 50.1
+filter(df, p1_pre_score < 0 | p1_pre_score > 50.1 | p2_post_score < 0 | p2_post_score > 50.1)
+# Check for summary of all columns
+summary(select(df, p1_pre_score, p2_post_score, change_score))
+# Identify change_score (post-pre AQ)
+df <- df %>% mutate(change_score = p2_post_score - p1_pre_score)
 ```
 
 
