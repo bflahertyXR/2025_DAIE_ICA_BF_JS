@@ -84,8 +84,11 @@ df <- df %>% mutate(change_score = p2_post_score - p1_pre_score)
 
 #### **Plots**
 
+```{r Plots}
+ggplot(df, aes(x = group, y = p1_pre_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Pre-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```
 ```{r}
-
+ggplot(df, aes(x = group, y = p2_post_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Post-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
 ### **Inferential Statistics**
@@ -116,6 +119,8 @@ df <- df %>% mutate(change_score = p2_post_score - p1_pre_score)
 
 #### Outline findings and relation to the hypothesis
 
-## \#### Limitations
+#### Limitations
+
+---
 
 # References
