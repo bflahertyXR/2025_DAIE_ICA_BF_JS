@@ -66,7 +66,9 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 
 ### \*\*Data Cleaning\*
 
-```{r Data Cleaning}
+```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
+# Adding library as the Notebook wouldnt knit without it
+library(tidyverse)
 # Read the data frames of the .csv file
 df <- read_csv("CA1_Autism_VR_Study_Data_Final.csv")
 # Check the column names
