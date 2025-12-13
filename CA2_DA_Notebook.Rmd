@@ -19,7 +19,12 @@ output:
 
 ------------------------------------------------------------------------
 
-#Abstract ##Aim and rationale ##Participants and setting ##Experiment design ##Results gathering ##Findings/implications
+# Abstract 
+## Aim and rationale 
+## Participants and setting 
+## Experiment design 
+## Results gathering
+## Findings/implications
 
 # Introduction
 
@@ -84,13 +89,64 @@ df <- df %>% mutate(change_score = p2_post_score - p1_pre_score)
 
 #### **Plots**
 
-```{r Plots}
-# BoxPlot created to show pre-treatement AQ scores
-ggplot(df, aes(x = group, y = p1_pre_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Pre-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```{r box plot, message=FALSE, warning=FALSE}
+# BoxPlot created to show pre-treatment AQ scores
+pre_box <- ggplot(df, aes(x = group, y = p1_pre_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Pre-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# BoxPlot created to show post-treatment AQ scores
+post_box <- ggplot(df, aes(x = group, y = p2_post_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Post-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Use ggpbr library to arrange histograms side-by-side to show difference pre and post treatment
+library(ggpubr)
+ggarrange(pre_box, post_box, ncol = 2, common.legend = TRUE, legend = "bottom")
+
+# Pre-treatment AQ scores shows similar median. Post-Treatment AQ scores show VR Therapy group noticeably lower indicating greater improvement. Boxes show IQR and whiskers show outliers
+
 ```
 
-```{r}
-ggplot(df, aes(x = group, y = p2_post_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Post-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```{r bar chart, message=FALSE, warning=FALSE}
+# Summarise and group mean score data by group for creating bar chart
+avg_dep_scores <- df %>% summarise(mean_pre = mean(p1_pre_score), mean_post = mean(p2_post_score), .by = group) %>% pivot_longer(cols = c(mean_pre, mean_post), names_to = "time", values_to = "mean_score") %>% mutate(time = recode(time, "mean_pre" = "Pre-Treatment", "mean_post" = "Post-Treatment"))
+
+# Bar chart created to show mean AQ scores before and after treatment for each group
+ggplot(avg_dep_scores, aes(x = group, y = mean_score, fill = time)) + geom_bar(stat = "identity", position = position_dodge()) + scale_fill_manual(values = c("orange", "skyblue")) + labs(title = "Average AQ (Depression) Scores by Group", x = "Therapy Group", y = "Mean AQ Score (0-50)" ) + theme_minimal(base_size = 13)
+
+# Both CBT and VR Therapy groups show reduced mean AQ scores after treatment
+```
+
+```{r line-graph, message=FALSE, warning=FALSE}
+# Summarise and group mean score data by time for creating line graph
+avg_dep_time <- df %>% summarise(mean_pre = mean(p1_pre_score), mean_post = mean(p2_post_score), .by = group) %>% pivot_longer(cols = c(mean_pre, mean_post), names_to = "time", values_to = "mean_score") %>% mutate(time = recode(time, "mean_pre" = "Pre-Treatment", "mean_post" = "Post-Treatment"))
+
+# Line graph showing mean AQ scores for each group pre and post treatment
+ggplot(avg_dep_time, aes(x = time, y = mean_score, group = group, color = group)) + geom_line(linewidth = 1.2) + geom_point(size = 13) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Change in Mean AQ Scores Over Time by Group", x = "Time Point", y = "Mean AQ Score (0-50)" ) + theme_minimal(base_size = 13)
+
+# Both CBT and VR Therapy groups downward trends from pre-treatment to post-treatment - VR Therapy shows greater reduction 
+```
+
+```{r histograms, message=FALSE, warning=FALSE}
+# Calculate pre-treatment AQ score distributions across the 3 groups
+pre_hist <- ggplot(df, aes(x = p1_pre_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.6, position = "identity", color = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_pre = mean(p1_pre_score)), aes(xintercept = mean_pre, colour = group), linetype = "dashed", linewidth = 1) +scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ Score Distribution", x = "AQ Score (0 -50)", y = "Frequency") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Calculate post-treatment AQ score distributions across the 3 groups
+post_hist <- ggplot(df, aes(x = p2_post_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.7, colour = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_post = mean(p2_post_score)), aes(xintercept = mean_post, color = group), linetype = "dashed", linewidth = 1) + scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Post-Treatment AQ Score Distribution", x = "AQ Score (0-50)", y = "Frequency") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Use ggpbr library to arrange histograms side-by-side to show difference pre and post treatment
+library(ggpubr)
+ggarrange(pre_hist, post_hist, ncol = 2, common.legend = TRUE, legend = "bottom")
+
+# All groups show similar AQ score pre-treatment. Post-treatment, both CBT and VR Therapy groups show lower AQ score indicating improvement
+```
+
+```{r scatterplot, message=FALSE, warning=FALSE}
+# Change Improvement to be positive
+df <- df %>% mutate(change_score = p1_pre_score - p2_post_score)
+
+# Scatterplot showing relationship between pre-treatment AQ scores and change in AQ scores post-treatment
+ggplot(df, aes(x = p1_pre_score, y = change_score, colour = group)) + geom_point(size = 3, alpha = 0.7) + geom_smooth(method = "lm", se = FALSE, linetype = "dashed") + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ vs Change in Score", x = "Pre-Treatment AQ Score", y = "Change in AQ (Pre - Post, Positive = Improvement)" ) + theme_minimal()
+
+# A positive change indicates improvement - Participants with higher pre-treatment AQ scores tended to have a larger improvement
+
 ```
 
 ### **Inferential Statistics**
@@ -119,7 +175,7 @@ ggplot(df, aes(x = group, y = p2_post_score, fill = group)) + geom_boxplot() + s
 
 # Discussion
 
-#### Outline findings and relation to the hypothesis
+### Outline findings and relation to the hypothesis
 
 #### Limitations
 
