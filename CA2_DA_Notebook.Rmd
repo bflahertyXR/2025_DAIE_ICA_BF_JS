@@ -67,31 +67,39 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 ### \*\*Data Cleaning\*
 
 ```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
-# Adding library as the Notebook wouldnt knit without it
+# Adding librarys to notebook to run the code correctly
 library(tidyverse)
+library(ggpubr)
+library(rstatix)
+library(knitr)
 # Read the data frames of the .csv file
 df <- read_csv("CA1_Autism_VR_Study_Data_Final.csv")
 # Check the column names
 colnames(df)
 # Change column names to lowercase
-names(df) <- tolower(names(df))
+df <- df %>% rename_with(tolower) %>% mutate(group = str_trim(tolower(group)))
 # Inspect Structure
 glimpse(df)
+summary(select(df, p1_pre_score, p2_post_score))
 # Check for missing values
 sapply(df, function(x) sum(is.na(x)))
 # Check for values outside the scope of the questionnaire - 0 - 50.1
 filter(df, p1_pre_score < 0 | p1_pre_score > 50.1 | p2_post_score < 0 | p2_post_score > 50.1)
+# Drop incomplete rows
+df <- df %>% drop_na(p1_pre_score, p2_post_score)
+# Identify change_score (pre-post AQ)
+df <- df %>% mutate(change_score = p1_pre_score - p2_post_score)
+# Confirm groups
+unique(df$group)
 # Check for summary of all columns
 summary(select(df, p1_pre_score, p2_post_score, change_score))
-# Identify change_score (post-pre AQ)
-df <- df %>% mutate(change_score = p2_post_score - p1_pre_score)
 ```
 
 ### **Descriptive Statistics**
 
 #### **Plots**
 
-```{r box plot, message=FALSE, warning=FALSE}
+```{r box plot, message=TRUE, warning=TRUE}
 # BoxPlot created to show pre-treatment AQ scores
 pre_box <- ggplot(df, aes(x = group, y = p1_pre_score, fill = group)) + geom_boxplot() + scale_fill_manual(values = c("skyblue", "lightgreen", "orange")) + labs(title = "Pre-Treatment AQ Scores",  x = "Group", y = "AQ Score (0–50)") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
@@ -106,7 +114,7 @@ ggarrange(pre_box, post_box, ncol = 2, common.legend = TRUE, legend = "bottom")
 
 ```
 
-```{r bar chart, message=FALSE, warning=FALSE}
+```{r bar chart, message=TRUE, warning=TRUE}
 # Summarise and group mean score data by group for creating bar chart
 avg_dep_scores <- df %>% summarise(mean_pre = mean(p1_pre_score), mean_post = mean(p2_post_score), .by = group) %>% pivot_longer(cols = c(mean_pre, mean_post), names_to = "time", values_to = "mean_score") %>% mutate(time = recode(time, "mean_pre" = "Pre-Treatment", "mean_post" = "Post-Treatment"))
 
@@ -116,7 +124,7 @@ ggplot(avg_dep_scores, aes(x = group, y = mean_score, fill = time)) + geom_bar(s
 # Both CBT and VR Therapy groups show reduced mean AQ scores after treatment
 ```
 
-```{r line-graph, message=FALSE, warning=FALSE}
+```{r line-graph, message=TRUE, warning=TRUE}
 # Summarise and group mean score data by time for creating line graph
 avg_dep_time <- df %>% summarise(mean_pre = mean(p1_pre_score), mean_post = mean(p2_post_score), .by = group) %>% pivot_longer(cols = c(mean_pre, mean_post), names_to = "time", values_to = "mean_score") %>% mutate(time = recode(time, "mean_pre" = "Pre-Treatment", "mean_post" = "Post-Treatment"))
 
@@ -126,7 +134,7 @@ ggplot(avg_dep_time, aes(x = time, y = mean_score, group = group, color = group)
 # Both CBT and VR Therapy groups downward trends from pre-treatment to post-treatment - VR Therapy shows greater reduction 
 ```
 
-```{r histograms, message=FALSE, warning=FALSE}
+```{r histograms, message=TRUE, warning=TRUE}
 # Calculate pre-treatment AQ score distributions across the 3 groups
 pre_hist <- ggplot(df, aes(x = p1_pre_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.6, position = "identity", color = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_pre = mean(p1_pre_score)), aes(xintercept = mean_pre, colour = group), linetype = "dashed", linewidth = 1) +scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ Score Distribution", x = "AQ Score (0 -50)", y = "Frequency") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
@@ -140,9 +148,7 @@ ggarrange(pre_hist, post_hist, ncol = 2, common.legend = TRUE, legend = "bottom"
 # All groups show similar AQ score pre-treatment. Post-treatment, both CBT and VR Therapy groups show lower AQ score indicating improvement
 ```
 
-```{r scatterplot, message=FALSE, warning=FALSE}
-# Change Improvement to be positive
-df <- df %>% mutate(change_score = p1_pre_score - p2_post_score)
+```{r scatterplot, message=TRUE, warning=TRUE}
 
 # Scatterplot showing relationship between pre-treatment AQ scores and change in AQ scores post-treatment
 ggplot(df, aes(x = p1_pre_score, y = change_score, colour = group)) + geom_point(size = 3, alpha = 0.7) + geom_smooth(method = "lm", se = FALSE, linetype = "dashed") + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ vs Change in Score", x = "Pre-Treatment AQ Score", y = "Change in AQ (Pre - Post, Positive = Improvement)" ) + theme_minimal()
@@ -152,6 +158,52 @@ ggplot(df, aes(x = p1_pre_score, y = change_score, colour = group)) + geom_point
 ```
 
 ### **Inferential Statistics**
+
+```{r paired t-test, message=TRUE, warning=TRUE}
+# Assign and filter by group
+cbt <- df %>% filter(group == "cbt")
+vr <- df %>% filter(group == "vr")
+control <- df %>% filter (group == "control")
+
+# t-test by group
+t_cbt <- t.test(cbt$p1_pre_score, cbt$p2_post_score, paired = TRUE)
+t_vr <- t.test(vr$p1_pre_score, vr$p2_post_score, paired = TRUE)
+t_control <- t.test(control$p1_pre_score, control$p2_post_score, paired = TRUE)
+
+# Output results of t-tests in list
+list(CBT = t_cbt, VR = t_vr, CONTROL = t_control)
+
+# Interpretation: 
+# CBT - significant improvement: t=22.9, p<.001. Mean diff = 10.99. CI between 9.2-11
+# VR - Very big improvement: t=37.6, p<.001. Mean diff = 18.62. CI between 17.6-19.6
+# CONTROL - no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no change
+
+# Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact
+```
+
+```{r Between group t-test, message=TRUE, warning=TRUE}
+# Assign and filter by groups - VR & Control, CBT & Control, VR and CBT
+vr_control <- df %>% filter(group %in% c("vr", "control"))
+cbt_control <- df %>% filter(group %in% c("cbt", "control"))
+vr_cbt <- df %>% filter(group %in% c("vr", "cbt"))
+
+# t-test between groups - VR vs Control | CBT vs Control | VR vs CBT 
+t_vr_control <- t.test(change_score ~ group, data = vr_control, var.equal = TRUE)
+t_cbt_control <- t.test(change_score ~ group, data = cbt_control, var.equal = TRUE)
+t_vr_cbt <- t.test(change_score ~ group, data = vr_cbt, var.equal = TRUE)
+
+# Output results of between group t-tests in list
+list(VR_vs_CONTROL = t_vr_control, CBT_vs_CONTROL = t_cbt_control, VR_vs_CBT = t_vr_cbt)
+
+# Interpretation: 
+# VR vs CONTROL - VR improves more than control: t=-28.95, p<.001. Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79. 18 point improvement 18.62 - 0.6
+# CBT vs CONTROL - CBT improves more than control: t=16.35, p<.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 - 0.6
+# VR vs CBT - CBT improves more than control: t=-12.38, p<.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
+
+# Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement
+
+```
+
 
 #### **Probability**
 
@@ -178,6 +230,37 @@ ggplot(df, aes(x = p1_pre_score, y = change_score, colour = group)) + geom_point
 # Discussion
 
 ### Outline findings and relation to the hypothesis
+
+**Paired t-test results**
+Undertaken to analyse changes in AQ scores pre and post-treatment in each group
+ - Null hypothesis - No significant difference (pre and post-treatment)
+ - Alternative hypothesis - Significant difference (pre and post-treatment)
+
+CBT - significant improvement: t=22.9, p<.001. Mean diff = 10.99. CI between 9.2-11
+VR - Very big improvement: t=37.6, p<.001. Mean diff = 18.62. CI between 17.6-19.6
+CONTROL - no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no change
+
+Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact
+
+**Between group t-test results**
+Undertaken to analyse if there are significant differences between AQ score between CBT and VR Therapy group
+Questions:
+- Is VR Therapy better than no treatment (VR vs CONTROL)
+- Is CBT better than no treatment (CBT vs CONTROL)
+- Is VR Therapy more effective than CBT (VR vs CBT)
+
+ - Null hypothesis - No significant difference in mean improvement
+ - Alternative hypothesis - One group differs in mean improvement
+ 
+VR vs CONTROL - VR improves more than control: t=-28.95, p<.001. Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79. 18 point improvement 18.62 - 0.6 - Significant improvement
+
+CBT vs CONTROL - CBT improves more than control: t=16.35, p<.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 - 0.6 - Significant improvement
+
+VR vs CBT - CBT improves more than control: t=-12.38, p<.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
+
+Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement
+
+VR Therapy outperforms CBT and Control, CBT outperforms Control
 
 #### Limitations
 
