@@ -165,12 +165,12 @@ cbt <- df %>% filter(group == "cbt")
 vr <- df %>% filter(group == "vr")
 control <- df %>% filter (group == "control")
 
-# t-test by group 
+# t-test by group
 t_cbt <- t.test(cbt$p1_pre_score, cbt$p2_post_score, paired = TRUE)
 t_vr <- t.test(vr$p1_pre_score, vr$p2_post_score, paired = TRUE)
 t_control <- t.test(control$p1_pre_score, control$p2_post_score, paired = TRUE)
 
-# Output results of t-test in list
+# Output results of t-tests in list
 list(CBT = t_cbt, VR = t_vr, CONTROL = t_control)
 
 # Interpretation: 
@@ -179,6 +179,29 @@ list(CBT = t_cbt, VR = t_vr, CONTROL = t_control)
 # CONTROL - no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no change
 
 # Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact
+```
+
+```{r Between group t-test, message=TRUE, warning=TRUE}
+# Assign and filter by groups - VR & Control, CBT & Control, VR and CBT
+vr_control <- df %>% filter(group %in% c("vr", "control"))
+cbt_control <- df %>% filter(group %in% c("cbt", "control"))
+vr_cbt <- df %>% filter(group %in% c("vr", "cbt"))
+
+# t-test between groups - VR vs Control | CBT vs Control | VR vs CBT 
+t_vr_control <- t.test(change_score ~ group, data = vr_control, var.equal = TRUE)
+t_cbt_control <- t.test(change_score ~ group, data = cbt_control, var.equal = TRUE)
+t_vr_cbt <- t.test(change_score ~ group, data = vr_cbt, var.equal = TRUE)
+
+# Output results of between group t-tests in list
+list(VR_vs_CONTROL = t_vr_control, CBT_vs_CONTROL = t_cbt_control, VR_vs_CBT = t_vr_cbt)
+
+# Interpretation: 
+# VR vs CONTROL - VR improves more than control: t=-28.95, p<.001. Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79. 18 point improvement 18.62 - 0.6
+# CBT vs CONTROL - CBT improves more than control: t=16.35, p<.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 - 0.6
+# VR vs CBT - CBT improves more than control: t=-12.38, p<.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
+
+# Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement
+
 ```
 
 
@@ -209,13 +232,35 @@ list(CBT = t_cbt, VR = t_vr, CONTROL = t_control)
 ### Outline findings and relation to the hypothesis
 
 **Paired t-test results**
-Undertaken to analyse changes in the group of AQ scores pre and post-treatment
+Undertaken to analyse changes in AQ scores pre and post-treatment in each group
+ - Null hypothesis - No significant difference (pre and post-treatment)
+ - Alternative hypothesis - Significant difference (pre and post-treatment)
+
 CBT - significant improvement: t=22.9, p<.001. Mean diff = 10.99. CI between 9.2-11
 VR - Very big improvement: t=37.6, p<.001. Mean diff = 18.62. CI between 17.6-19.6
 CONTROL - no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no change
+
 Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact
 
+**Between group t-test results**
+Undertaken to analyse if there are significant differences between AQ score between CBT and VR Therapy group
+Questions:
+- Is VR Therapy better than no treatment (VR vs CONTROL)
+- Is CBT better than no treatment (CBT vs CONTROL)
+- Is VR Therapy more effective than CBT (VR vs CBT)
 
+ - Null hypothesis - No significant difference in mean improvement
+ - Alternative hypothesis - One group differs in mean improvement
+ 
+VR vs CONTROL - VR improves more than control: t=-28.95, p<.001. Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79. 18 point improvement 18.62 - 0.6 - Significant improvement
+
+CBT vs CONTROL - CBT improves more than control: t=16.35, p<.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 - 0.6 - Significant improvement
+
+VR vs CBT - CBT improves more than control: t=-12.38, p<.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
+
+Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement
+
+VR Therapy outperforms CBT and Control, CBT outperforms Control
 
 #### Limitations
 
