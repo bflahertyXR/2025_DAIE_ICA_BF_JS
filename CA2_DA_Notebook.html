@@ -11,7 +11,7 @@
 
 <meta name="author" content="Brendan Flaherty (D00285274) &amp; Jeremiah Spillane (D00295490)" />
 
-<meta name="date" content="2025-12-14" />
+<meta name="date" content="2025-12-19" />
 
 <title>Comparing the Effectiveness of VR-Based and CBT Interventions for Autism Spectrum Disorder</title>
 
@@ -208,6 +208,83 @@ window.buildTabsets = function(tocID) {
   });
 };
 
+</script>
+<script>
+window.initializeCodeFolding = function(show) {
+
+  // handlers for show-all and hide all
+  $("#rmd-show-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('show');
+    });
+  });
+  $("#rmd-hide-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('hide');
+    });
+  });
+
+  // index for unique code element ids
+  var currentIndex = 1;
+
+  // select all R code blocks
+  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
+  rCodeBlocks.each(function() {
+    // skip if the block has fold-none class
+    if ($(this).hasClass('fold-none')) return;
+
+    // create a collapsable div to wrap the code in
+    var div = $('<div class="collapse r-code-collapse"></div>');
+    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
+    var id = 'rcode-643E0F36' + currentIndex++;
+    div.attr('id', id);
+    $(this).before(div);
+    $(this).detach().appendTo(div);
+
+    // add a show code button right above
+    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
+    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
+    showCodeButton.append(showCodeText);
+    showCodeButton
+        .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
+        .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
+        .attr('aria-expanded', showThis)
+        .attr('aria-controls', id);
+
+    var buttonRow = $('<div class="row"></div>');
+    var buttonCol = $('<div class="col-md-12"></div>');
+
+    buttonCol.append(showCodeButton);
+    buttonRow.append(buttonCol);
+
+    div.before(buttonRow);
+
+    // show the div if necessary
+    if (showThis) div.collapse('show');
+
+    // update state of button on show/hide
+    //   * Change text
+    //   * add a class for intermediate states styling
+    div.on('hide.bs.collapse', function () {
+      showCodeText.text('Show');
+      showCodeButton.addClass('btn-collapsing');
+    });
+    div.on('hidden.bs.collapse', function () {
+      showCodeButton.removeClass('btn-collapsing');
+    });
+    div.on('show.bs.collapse', function () {
+      showCodeText.text('Hide');
+      showCodeButton.addClass('btn-expanding');
+    });
+    div.on('shown.bs.collapse', function () {
+      showCodeButton.removeClass('btn-expanding');
+    });
+
+  });
+
+}
 </script>
 <style type="text/css">.hljs-literal {
 color: #990073;
@@ -1603,6 +1680,9 @@ display: none;
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -1619,13 +1699,21 @@ display: none;
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Comparing the Effectiveness of VR-Based and
 CBT Interventions for Autism Spectrum Disorder</h1>
 <h4 class="author">Brendan Flaherty (D00285274) &amp; Jeremiah Spillane
 (D00295490)</h4>
-<h4 class="date">2025-12-14</h4>
+<h4 class="date">2025-12-19</h4>
 
 </div>
 
@@ -1692,7 +1780,7 @@ Traits using the Autism Spectrum Quotient (AQ)</h2>
 <p><strong>Participants:</strong> Brendan Flaherty (D00285274) &amp;
 Jeremiah Spillane (D00295490) <strong>Module:</strong> Data Analytics
 for Immersive Environments (COMPC9047) <strong>Date:</strong>
-2025-12-14</p>
+2025-12-19</p>
 <hr />
 </div>
 </div>
@@ -2021,6 +2109,37 @@ list(VR_vs_CONTROL = t_vr_control, CBT_vs_CONTROL = t_cbt_control, VR_vs_CBT = t
 # VR vs CBT - CBT improves more than control: t=-12.38, p&lt;.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
 
 # Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement</code></pre>
+<pre class="r"><code># Calculate the sample mean of change score
+mean_change &lt;- mean(df$change_score)
+# Calculate the standard deviation of change score
+sd_change &lt;- sd(df$change_score)
+# Calculate the number of participants
+n &lt;- nrow(df)
+# Calculate Z-value using the formuala
+z_value &lt;- (mean_change - 0) / (sd_change / sqrt(n))
+# Calculate p-value using the Z distribution
+p_value &lt;- 2 * (1 - pnorm(abs(z_value)))
+# Calculate the Confidence Interval around the mean
+error_margin &lt;- qnorm(0.975) * (sd_change / sqrt(n))
+# Calculate the Lower limits of the CI
+ci_lower &lt;- mean_change - error_margin
+# Calculate the Upper limits of the CI
+ci_upper &lt;- mean_change + error_margin
+# Create a table for the results
+data.frame(Mean_Change = round(mean_change, 2), Z_Value = round(z_value, 2), P_Value = round(p_value, 4), CI_Lower = round(ci_lower, 2), CI_Upper = round(ci_upper, 2))</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Mean_Change"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Z_Value"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["P_Value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI_Lower"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_Upper"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"9.77","2":"19.72","3":"0","4":"8.8","5":"10.74"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># Interpretation: 
+# The average change in AQ scores across all participants showed a positive value (9.77) meaning that scores decreased after treatment and that participants improved
+
+# The Z score of 19.72 shows that the well above 0 and indicates that improvement is highly unlikely random
+
+# P value is 0, so can reject null hypothesis
+
+# 95% Confidence Interval of lower as 8.8 and upper limits at 10.74 shows that the true average improvement is narrow and shows consistent treatment effect</code></pre>
 <div id="probability" class="section level4">
 <h4><strong>Probability</strong></h4>
 </div>
@@ -2052,12 +2171,27 @@ list(VR_vs_CONTROL = t_vr_control, CBT_vs_CONTROL = t_cbt_control, VR_vs_CBT = t
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
+<p><strong>This is from the brief</strong> “The Autism Spectrum Quotient
+(AQ) is a 50-item self report questionnaire with a total score between 0
+and 50.1. A higher score indicates a greater number of autistic traits.
+A total score os 26 or higher is often used as a threshold to suggest
+the presence of clinically significant autistic traits. Research
+indicates that the majority of individuals with the official autism
+diagnosis score 32 or above. In contrast, the average score for
+neurotypical males is around 17 and for neurotypical females is about
+15.6 with males tending to score higher than females in the general
+population”</p>
 <div id="outline-findings-and-relation-to-the-hypothesis" class="section level3">
 <h3>Outline findings and relation to the hypothesis</h3>
 <p><strong>Paired t-test results</strong> Undertaken to analyse changes
-in AQ scores pre and post-treatment in each group - Null hypothesis - No
-significant difference (pre and post-treatment) - Alternative hypothesis
-- Significant difference (pre and post-treatment)</p>
+in AQ scores pre and post-treatment in each group Question: Is there a
+different in each group pre and post treatment?</p>
+<ul>
+<li>Null hypothesis - No significant difference (pre and
+post-treatment)</li>
+<li>Alternative hypothesis - Significant difference (pre and
+post-treatment)</li>
+</ul>
 <p>CBT - significant improvement: t=22.9, p&lt;.001. Mean diff = 10.99.
 CI between 9.2-11 VR - Very big improvement: t=37.6, p&lt;.001. Mean
 diff = 18.62. CI between 17.6-19.6 CONTROL - no significant change:
@@ -2067,8 +2201,8 @@ Therapy having a significant impact</p>
 <p><strong>Between group t-test results</strong> Undertaken to analyse
 if there are significant differences between AQ score between CBT and VR
 Therapy group Questions: - Is VR Therapy better than no treatment (VR vs
-CONTROL) - Is CBT better than no treatment (CBT vs CONTROL) - Is VR
-Therapy more effective than CBT (VR vs CBT)</p>
+CONTROL)? - Is CBT better than no treatment (CBT vs CONTROL)? - Is VR
+Therapy more effective than CBT (VR vs CBT)?</p>
 <ul>
 <li>Null hypothesis - No significant difference in mean improvement</li>
 <li>Alternative hypothesis - One group differs in mean improvement</li>
@@ -2086,6 +2220,26 @@ point improvement 18.62 - 10.09</p>
 on the Control group and comparing VR and CBT showed that the VR group
 achieved a larger improvement</p>
 <p>VR Therapy outperforms CBT and Control, CBT outperforms Control</p>
+<p><strong>z-test results</strong></p>
+<p>Evaluate whether there is a significant improvement in AQ scores
+across all participants, across all groups and determine whether the
+overall mean change in AQ scores differed significantly from 0</p>
+<p>Does the treatment work across all groups and participants?</p>
+<ul>
+<li>Null hypothesis - The mean change in AQ scores equals 0</li>
+<li>Alternative hypothesis - The mean change in AQ scores does not
+equals 0</li>
+</ul>
+<p>The average change in AQ scores across all participants showed a
+positive value (9.77) meaning that scores decreased after treatment and
+that participants improved</p>
+<p>The Z score of 19.72 shows that the well above 0 and indicates that
+improvement is highly unlikely random and shows the strength of the
+evidence</p>
+<p>P value is 0, so can reject null hypothesis</p>
+<p>95% Confidence Interval of lower as 8.8 and upper limits at 10.74
+shows that the true average improvement and the narrow confidence
+interval shows consistent treatment effect across the sample</p>
 <div id="limitations" class="section level4">
 <h4>Limitations</h4>
 <hr />
@@ -2094,6 +2248,14 @@ achieved a larger improvement</p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
+<p>Maskey, M., Rodgers, J., Ingham, B., Freeston, M., Evans, G., Labus,
+M. and Parr, J.R. (2019). Using Virtual Reality Environments to Augment
+Cognitive Behavioral Therapy for Fears and Phobias in Autistic Adults.
+Autism in Adulthood, 1(2), pp.134–145. <a href="doi:https://doi.org/10.1089/aut.2018.0019" class="uri">doi:https://doi.org/10.1089/aut.2018.0019</a>.</p>
+<p>De Luca, R., Leonardi, S., Portaro, S., Le Cause, M., De Domenico,
+C., Colucci, P.V., Pranio, F., Bramanti, P. and Calabrò, R.S. (2019).
+Innovative use of virtual reality in autism spectrum disorder: A
+case-study. Applied Neuropsychology: Child, 10(1), pp.90–100. <a href="doi:https://doi.org/10.1080/21622965.2019.1610964" class="uri">doi:https://doi.org/10.1080/21622965.2019.1610964</a>.</p>
 </div>
 
 
@@ -2129,6 +2291,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
