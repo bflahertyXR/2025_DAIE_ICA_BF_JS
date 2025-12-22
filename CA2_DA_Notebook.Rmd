@@ -20,11 +20,20 @@ output:
 ------------------------------------------------------------------------
 
 # Abstract 
-## Aim and rationale 
-## Participants and setting 
-## Experiment design 
-## Results gathering
-## Findings/implications
+
+In this research paper we explore... 
+
+#### Aim and rationale 
+
+The research aims are... 
+
+#### Participants and setting 
+
+Participants incl. 300 patients... 
+
+#### Experiment design 
+#### Results gathering
+#### Findings/implications
 
 # Introduction
 
@@ -68,6 +77,8 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 
 ```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
 # Adding librarys to notebook to run the code correctly
+if(!require("tidyverse"))
+install.packages("tidyverse")
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
