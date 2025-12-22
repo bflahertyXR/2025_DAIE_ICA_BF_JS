@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 output:
   html_document:
     toc: true
+    code_folding: hide
     df_print: paged
   html_notebook:
     toc: true
@@ -68,10 +69,23 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 
 ```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
 # Adding librarys to notebook to run the code correctly
-library(tidyverse)
-library(ggpubr)
-library(rstatix)
+if(!require("tidyverse"))
+  install.packages("tidyverse")
+  library(tidyverse)
+
+if(!require("ggpubr"))
+  install.packages("ggpubr")
+  library(ggpubr)
+
+if(!require("rstatix"))
+  install.packages("rstatix")
+  library(rstatix)
+
+if(!require("knitr"))
+install.packages("knitr")
 library(knitr)
+
+
 # Read the data frames of the .csv file
 df <- read_csv("CA1_Autism_VR_Study_Data_Final.csv")
 # Check the column names
