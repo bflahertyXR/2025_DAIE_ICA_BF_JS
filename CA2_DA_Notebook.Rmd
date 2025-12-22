@@ -20,20 +20,11 @@ output:
 ------------------------------------------------------------------------
 
 # Abstract 
-
-In this research paper we explore... 
-
-#### Aim and rationale 
-
-The research aims are... 
-
-#### Participants and setting 
-
-Participants incl. 300 patients... 
-
-#### Experiment design 
-#### Results gathering
-#### Findings/implications
+## Aim and rationale 
+## Participants and setting 
+## Experiment design 
+## Results gathering
+## Findings/implications
 
 # Introduction
 
@@ -41,11 +32,11 @@ Participants incl. 300 patients...
 
 Briefly describe the Autism Spectrum Disorder (ASD) as a neurodevelopmental spectrum condition and introduce the concept of neurodiversity.
 
-## Rationale
+#### Rationale
 
 Why are we doing this study? This study investigates which method yileds greater improvements in AQ
 
-## Hypotesis
+#### Hypotesis
 
 #### **H1:** After controlling for baseline AQ, there will be no group differences in post-treatment (null-hypothesis)
 
@@ -53,7 +44,7 @@ Why are we doing this study? This study investigates which method yileds greater
 
 #### **H3:** ???
 
-# Method
+#### Method
 
 #### **Participants:** 300 adults (M = 150, F = 150), aged 12-40. Random assignment to CBT (n = 100), VR (n = 100), Control (n = 100).
 
@@ -77,8 +68,6 @@ Data recorded in columns P1_Pre_Score and P2_Post_Score.
 
 ```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
 # Adding librarys to notebook to run the code correctly
-if(!require("tidyverse"))
-install.packages("tidyverse")
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
