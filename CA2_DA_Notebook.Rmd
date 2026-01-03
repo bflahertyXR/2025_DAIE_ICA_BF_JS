@@ -22,11 +22,16 @@ output:
 
 # Abstract 
 ## Aim and rationale 
-
+This research paper examines changes in Autism Spectrum Quotient (AQ) scores across two parameters. Firstly across time, that is pre-trial and post trial over a 12 week period, and secondly, across three groups employing various approaches. These are 1) cognitive behavioral therapy (CBT) ; 2) virtual reality (VR) and 3) a control group. This study aims to answer whether CBT or VR-based therapy lead to a statistically significant change in AQ scores compared to no treatment, and whether or not one intervention is more effective than the other.
 
 
 ## Participants and setting 
+
+Participants X and Settings X
+
 ## Experiment design 
+
+Expoeriment X
 ## Results gathering
 ## Findings/implications
 
