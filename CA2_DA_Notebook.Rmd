@@ -38,7 +38,13 @@ This study employed a randomised controlled, pre-test/post-test, mixed experimen
 
 
 ## Results gathering
+
+Results were gathered by comparing pre- and post-treatment Autism Spectrum Quotient (AQ) scores across participants using inferential statistical tests, including paired t-tests, between groun t-tests, and z-tests, alongside descriptive statistics and 95% confidence intervals to quantify change over the 12-week period. This approach assessed whether observed changes in AQ scores were statistically significant and unlikely to have occurred by chance
+
+
 ## Findings/implications
+
+The findings indicated a statistically significant reduction in AQ scores, suggesting that therapeutic intervention was associated with measurable changes in reported autistic traits across the sample. However, the implications are constrained by reliance on self-report data and the need to interpret statistical significance cautiously when considering real-world or clinical impact.
 
 # Introduction
 
@@ -294,61 +300,21 @@ data.frame(Mean_Change = round(mean_change, 2), Z_Value = round(z_value, 2), P_V
 ### Outline findings and relation to the hypothesis
 
 **Paired t-test results**
-Undertaken to analyse changes in AQ scores pre and post-treatment in each group
-Question:
-  Is there a different in each group pre and post treatment?
-  
- - Null hypothesis - No significant difference (pre and post-treatment)
- - Alternative hypothesis - Significant difference (pre and post-treatment)
-
-CBT - significant improvement: t=22.9, p<.001. Mean diff = 10.99. CI between 9.2-11
-VR - Very big improvement: t=37.6, p<.001. Mean diff = 18.62. CI between 17.6-19.6
-CONTROL - no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no change
-
-Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact
+Paired t-tests were conducted to examine within-group changes in AQ scores across the 12-week intervention period. The CBT group demonstrated a statistically significant reduction in AQ scores, with a mean decrease of 10.99 points (t = 22.9, p < .001). The VR therapy group showed an even larger and more consistent improvement, with a mean reduction of 18.62 points (t = 37.6, p < .001). In contrast, the control group exhibited no significant change over time (mean difference = 0.6; t = 1.59, p = 0.115). These findings support the hypothesis that both CBT and VR therapy reduce AQ scores, while no improvement occurs without intervention.
 
 **Between group t-test results**
-Undertaken to analyse if there are significant differences between AQ score between CBT and VR Therapy group
-Questions:
-- Is VR Therapy better than no treatment (VR vs CONTROL)?
-- Is CBT better than no treatment (CBT vs CONTROL)?
-- Is VR Therapy more effective than CBT (VR vs CBT)?
 
- - Null hypothesis - No significant difference in mean improvement
- - Alternative hypothesis - One group differs in mean improvement
- 
-VR vs CONTROL - VR improves more than control: t=-28.95, p<.001. Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79. 18 point improvement 18.62 - 0.6 - Significant improvement
-
-CBT vs CONTROL - CBT improves more than control: t=16.35, p<.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 - 0.6 - Significant improvement
-
-VR vs CBT - CBT improves more than control: t=-12.38, p<.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10 point improvement 18.62 - 10.09
-
-Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement
-
-VR Therapy outperforms CBT and Control, CBT outperforms Control
+Between-group comparisons further demonstrated that both treatment conditions were significantly more effective than the control group. Participants receiving VR therapy showed substantially greater improvement than controls (t = −28.95, p < .001), as did those receiving CBT (t = 16.35, p < .001). Direct comparison between the two interventions revealed that VR therapy produced significantly greater reductions in AQ scores than CBT (t = −12.38, p < .001), indicating superior effectiveness of the VR-based intervention.
 
 **z-test results**
 
-Evaluate whether there is a significant improvement in AQ scores across all participants, across all groups and determine whether the overall mean change in AQ scores differed significantly from 0
+A z-test assessing overall change across all participants indicated a significant mean reduction in AQ scores of 9.77 points (z = 19.72, p < .001). The 95% confidence interval (8.8 to 10.74) was narrow, suggesting a consistent treatment effect across the sample. This result confirms that the observed improvements were highly unlikely to be due to chance.
 
-Does the treatment work across all groups and participants?
-
- - Null hypothesis - The mean change in AQ scores equals 0
- - Alternative hypothesis - The mean change in AQ scores does not equals 0
- 
- 
-The average change in AQ scores across all participants showed a positive value (9.77) meaning that scores decreased after treatment and that participants improved
-
-The Z score of 19.72 shows that the well above 0 and indicates that improvement is highly unlikely random and shows the strength of the evidence
-
-P value is 0, so can reject null hypothesis
-
-95% Confidence Interval of lower as 8.8 and upper limits at 10.74 shows that the true average improvement and the narrow confidence interval shows consistent treatment effect across the sample
-
-
-
+Overall, the findings provide strong evidence that both CBT and VR-based therapy significantly reduce AQ scores, with VR therapy yielding the largest and most consistent improvements. CBT also produced meaningful benefits relative to no treatment, while the control group showed no significant change. These results support the study hypotheses and highlight the potential of immersive VR therapy as an effective intervention for reducing autistic traits.
 
 #### Limitations
+
+These findings must be considered with limitations including (dependency on However, the implications are constrained by (over) reliance on self-report data and the need to interpret statistical significance cautiously when considering real-world or clinical impact.
 
 ------------------------------------------------------------------------
 
