@@ -4,14 +4,14 @@ title: "Comparing the Effectiveness of VR-Based and CBT Interventions for Autism
 author: "Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490)"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    toc: true
-  html_notebook:
-    toc: true
   html_document:
     toc: true
     code_folding: hide
     df_print: paged
+  html_notebook:
+    toc: true
+  pdf_document:
+    toc: true
 ---
 
 # Data Analytics for Immersive Environments (COMPC9047)
@@ -25,7 +25,7 @@ output:
 # Abstract 
 ## Aim and rationale 
 
-This research paper examines changes in Autism Spectrum Quotient (AQ) scores across two parameters. Firstly across time, that is pre-trial and post trial over a 12 week period, and secondly, across three groups employing various approaches. These groups employ different approaches, namely 1) cognitive behavioral therapy (CBT) ; 2) virtual reality (VR) and 3) a control group. This study aims to answer whether CBT or VR-based therapy lead to a statistically significant change in AQ scores compared to no treatment, and whether or not one intervention is more effective than the other.
+This research paper examines changes in Autism Spectrum Quotient (AQ) scores across two parameters. Firstly across time, that is pre-trial and post trial over a 12 week period, and secondly, across three groups employing various approaches. The different approaches employed here are: 1) cognitive behavioral therapy (CBT), 2) virtual reality (VR), and 3) a control group. This study aims to answer whether CBT or VR-based therapy lead to a statistically significant change in AQ scores compared to no treatment, and whether or not one intervention is more effective than the other.
 
 
 ## Participants and setting 
@@ -36,10 +36,9 @@ The study involved a total of 300 adult participants (150 male, 150 female) aged
 
 This study employed a randomised controlled, pre-test/post-test, mixed experimental design to examine the effectiveness of therapeutic interventions on autistic traits over time (t = 12 weeks).
 
-
 ## Results gathering
 
-Results were gathered by comparing pre- and post-treatment Autism Spectrum Quotient (AQ) scores across participants using inferential statistical tests, including paired t-tests, between groun t-tests, and z-tests, alongside descriptive statistics and 95% confidence intervals to quantify change over the 12-week period. This approach assessed whether observed changes in AQ scores were statistically significant and unlikely to have occurred by chance
+Results were gathered by comparing pre- and post-treatment Autism Spectrum Quotient (AQ) scores across participants using statistical tests, including paired t-tests, between groun t-tests, and z-tests, alongside descriptive statistics and 95% confidence intervals to quantify change over the 12-week period. This approach assessed whether observed changes in AQ scores were statistically significant and unlikely to have occurred by chance
 
 
 ## Findings/implications
@@ -320,7 +319,13 @@ These findings must be considered with limitations including (dependency on Howe
 
 # References
 
+Baus, Oliver & Bouchard, Stéphane. (2014). Moving from Virtual Reality Exposure-Based Therapy to Augmented Reality Exposure-Based Therapy: A Review. Frontiers in human neuroscience. 8. 112. 10.3389/fnhum.2014.00112. (Accessed: 3 October 2023)
+
 Ekman E. & Hiltunen A. J. (2015). Modified CBT using visualization for Autism Spectrum Disorder (ASD), anxiety and avoidance behavior – a quasi-experimental open pilot study. Scandinavian Journal of Psychology, 56, 641–648.
+
+Freeman, D. et al. (2017) Virtual reality in the assessment, understanding, and treatment of mental health disorders: Psychological medicine, Cambridge Core (Accessed: 6 October 2023)
+
+Maples-Keller, J. L., Bunnell, B. E., Kim, S. J., & Rothbaum, B. O. (2017). The Use of Virtual Reality Technology in the Treatment of Anxiety and Other Psychiatry Disorders. Harvard Review of Psychiatry, 25(3), 103-113. (Accessed: 4 October 2023)
 
 Maskey, M., Rodgers, J., Ingham, B., Freeston, M., Evans, G., Labus, M. and Parr, J.R. (2019). Using Virtual Reality Environments to Augment Cognitive Behavioral Therapy for Fears and Phobias in Autistic Adults. Autism in Adulthood, 1(2), pp.134–145. doi:https://doi.org/10.1089/aut.2018.0019.
 
