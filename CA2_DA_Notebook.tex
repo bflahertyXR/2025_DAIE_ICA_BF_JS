@@ -1,0 +1,846 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Comparing the Effectiveness of VR-Based and CBT Interventions for Autism Spectrum Disorder},
+  pdfauthor={Brendan Flaherty (D00285274) \& Jeremiah Spillane (D00295490)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Comparing the Effectiveness of VR-Based and CBT Interventions for
+Autism Spectrum Disorder}
+\author{Brendan Flaherty (D00285274) \& Jeremiah Spillane (D00295490)}
+\date{2026-01-03}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section{Data Analytics for Immersive Environments
+(COMPC9047)}\label{data-analytics-for-immersive-environments-compc9047}
+
+\subsection{Investigating the Impact of Therapeutic Interventions on
+Austistic Traits using the Autism Spectrum Quotient
+(AQ)}\label{investigating-the-impact-of-therapeutic-interventions-on-austistic-traits-using-the-autism-spectrum-quotient-aq}
+
+\textbf{Participants:} Brendan Flaherty (D00285274) \& Jeremiah Spillane
+(D00295490) \textbf{Module:} Data Analytics for Immersive Environments
+(COMPC9047) \textbf{Date:} 2026-01-03
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Abstract}\label{abstract}
+
+\subsection{Aim and rationale}\label{aim-and-rationale}
+
+This research paper examines changes in Autism Spectrum Quotient (AQ)
+scores across two parameters. Firstly across time, that is pre-trial and
+post trial over a 12 week period, and secondly, across three groups
+employing various approaches. These are 1) cognitive behavioral therapy
+(CBT) ; 2) virtual reality (VR) and 3) a control group. This study aims
+to answer whether CBT or VR-based therapy lead to a statistically
+significant change in AQ scores compared to no treatment, and whether or
+not one intervention is more effective than the other.
+
+\subsection{Participants and setting}\label{participants-and-setting}
+
+Participants X and Settings X
+
+\subsection{Experiment design}\label{experiment-design}
+
+Expoeriment X \#\# Results gathering \#\# Findings/implications
+
+\section{Introduction}\label{introduction}
+
+\subsection{Topic and Context}\label{topic-and-context}
+
+Briefly describe the Autism Spectrum Disorder (ASD) as a
+neurodevelopmental spectrum condition and introduce the concept of
+neurodiversity.
+
+\subsection{Rationale}\label{rationale}
+
+Why are we doing this study? This study investigates which method yileds
+greater improvements in AQ
+
+\subsection{Hypotesis}\label{hypotesis}
+
+\paragraph{\texorpdfstring{\textbf{H1:} After controlling for baseline
+AQ, there will be no group differences in post-treatment
+(null-hypothesis)}{H1: After controlling for baseline AQ, there will be no group differences in post-treatment (null-hypothesis)}}\label{h1-after-controlling-for-baseline-aq-there-will-be-no-group-differences-in-post-treatment-null-hypothesis}
+
+\paragraph{\texorpdfstring{\textbf{H2:} Both CBT abd VR therapy groups
+will show significant reductions in AQ scores from pre-treatment to
+post-treatment, while the control group will
+not}{H2: Both CBT abd VR therapy groups will show significant reductions in AQ scores from pre-treatment to post-treatment, while the control group will not}}\label{h2-both-cbt-abd-vr-therapy-groups-will-show-significant-reductions-in-aq-scores-from-pre-treatment-to-post-treatment-while-the-control-group-will-not}
+
+\paragraph{\texorpdfstring{\textbf{H3:} ???}{H3: ???}}\label{h3}
+
+\section{Method}\label{method}
+
+\paragraph{\texorpdfstring{\textbf{Participants:} 300 adults (M = 150, F
+= 150), aged 12-40. Random assignment to CBT (n = 100), VR (n = 100),
+Control (n =
+100).}{Participants: 300 adults (M = 150, F = 150), aged 12-40. Random assignment to CBT (n = 100), VR (n = 100), Control (n = 100).}}\label{participants-300-adults-m-150-f-150-aged-12-40.-random-assignment-to-cbt-n-100-vr-n-100-control-n-100.}
+
+\paragraph{\texorpdfstring{\textbf{Design:} Mixed 3 (Group: CBT, VR,
+Control - between subjects) x 2 (Time: Pre, Post - within-subjects)
+design.}{Design: Mixed 3 (Group: CBT, VR, Control - between subjects) x 2 (Time: Pre, Post - within-subjects) design.}}\label{design-mixed-3-group-cbt-vr-control---between-subjects-x-2-time-pre-post---within-subjects-design.}
+
+\paragraph{\texorpdfstring{\textbf{Materials:} Autism Spectrum Quotient
+(AQ) 50-item questionnaire, scored
+0-50.1.}{Materials: Autism Spectrum Quotient (AQ) 50-item questionnaire, scored 0-50.1.}}\label{materials-autism-spectrum-quotient-aq-50-item-questionnaire-scored-0-50.1.}
+
+\paragraph{\texorpdfstring{\textbf{Procedure:} Each participant
+completed AQ before and after 12 weeks of
+therapy.}{Procedure: Each participant completed AQ before and after 12 weeks of therapy.}}\label{procedure-each-participant-completed-aq-before-and-after-12-weeks-of-therapy.}
+
+\begin{itemize}
+\item
+  CBT: Weekly sessions on social/emotional regulation.
+\item
+  VR: Immersive simulations for social interaction.
+\item
+  Control: No intervention.
+\end{itemize}
+
+Data recorded in columns P1\_Pre\_Score and P2\_Post\_Score.
+
+\section{Results}\label{results}
+
+\subsubsection{**Data Cleaning*}\label{data-cleaning}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Adding librarys to notebook to run the code correctly}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{))}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: tidyverse
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.6
+## v forcats   1.0.1     v stringr   1.6.0
+## v ggplot2   4.0.1     v tibble    3.3.0
+## v lubridate 1.9.4     v tidyr     1.3.2
+## v purrr     1.2.0     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{library}\NormalTok{(tidyverse)}
+
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"ggpubr"}\NormalTok{))}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggpubr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggpubr
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{library}\NormalTok{(ggpubr)}
+
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"rstatix"}\NormalTok{))}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"rstatix"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: rstatix
+## 
+## Attaching package: 'rstatix'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{library}\NormalTok{(rstatix)}
+
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"knitr"}\NormalTok{))}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"knitr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: knitr
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(knitr)}
+
+
+\CommentTok{\# Read the data frames of the .csv file}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"CA1\_Autism\_VR\_Study\_Data\_Final.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 300 Columns: 6
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (2): Group, Gender
+## dbl (4): ID, P1_Pre_Score, P2_Post_Score, Change_Score
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the column names}
+\FunctionTok{colnames}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ID"            "Group"         "Gender"        "P1_Pre_Score" 
+## [5] "P2_Post_Score" "Change_Score"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change column names to lowercase}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename\_with}\NormalTok{(tolower) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{group =} \FunctionTok{str\_trim}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(group)))}
+\CommentTok{\# Inspect Structure}
+\FunctionTok{glimpse}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 300
+## Columns: 6
+## $ id            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1~
+## $ group         <chr> "control", "control", "control", "control", "control", "~
+## $ gender        <chr> "F", "F", "M", "F", "F", "F", "M", "F", "F", "F", "F", "~
+## $ p1_pre_score  <dbl> 45, 47, 48, 45, 45, 41, 50, 47, 49, 45, 50, 46, 50, 47, ~
+## $ p2_post_score <dbl> 37, 50, 46, 43, 47, 47, 50, 44, 50, 49, 46, 42, 50, 50, ~
+## $ change_score  <dbl> 8, -3, 2, 2, -2, -6, 0, 3, -1, -4, 4, 4, 0, -3, 0, 6, 2,~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{select}\NormalTok{(df, p1\_pre\_score, p2\_post\_score))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   p1_pre_score   p2_post_score  
+##  Min.   :32.00   Min.   :20.00  
+##  1st Qu.:42.00   1st Qu.:28.00  
+##  Median :45.00   Median :35.00  
+##  Mean   :44.69   Mean   :34.92  
+##  3rd Qu.:48.00   3rd Qu.:42.00  
+##  Max.   :50.00   Max.   :50.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check for missing values}
+\FunctionTok{sapply}\NormalTok{(df, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            id         group        gender  p1_pre_score p2_post_score 
+##             0             0             0             0             0 
+##  change_score 
+##             0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check for values outside the scope of the questionnaire {-} 0 {-} 50.1}
+\FunctionTok{filter}\NormalTok{(df, p1\_pre\_score }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ p1\_pre\_score }\SpecialCharTok{\textgreater{}} \FloatTok{50.1} \SpecialCharTok{|}\NormalTok{ p2\_post\_score }\SpecialCharTok{\textless{}} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ p2\_post\_score }\SpecialCharTok{\textgreater{}} \FloatTok{50.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 0 x 6
+## # i 6 variables: id <dbl>, group <chr>, gender <chr>, p1_pre_score <dbl>,
+## #   p2_post_score <dbl>, change_score <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Drop incomplete rows}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{(p1\_pre\_score, p2\_post\_score)}
+\CommentTok{\# Identify change\_score (pre{-}post AQ)}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{change\_score =}\NormalTok{ p1\_pre\_score }\SpecialCharTok{{-}}\NormalTok{ p2\_post\_score)}
+\CommentTok{\# Confirm groups}
+\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{group)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "control" "cbt"     "vr"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check for summary of all columns}
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{select}\NormalTok{(df, p1\_pre\_score, p2\_post\_score, change\_score))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   p1_pre_score   p2_post_score    change_score  
+##  Min.   :32.00   Min.   :20.00   Min.   :-7.00  
+##  1st Qu.:42.00   1st Qu.:28.00   1st Qu.: 3.00  
+##  Median :45.00   Median :35.00   Median : 9.00  
+##  Mean   :44.69   Mean   :34.92   Mean   : 9.77  
+##  3rd Qu.:48.00   3rd Qu.:42.00   3rd Qu.:17.00  
+##  Max.   :50.00   Max.   :50.00   Max.   :30.00
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{\textbf{Descriptive
+Statistics}}{Descriptive Statistics}}\label{descriptive-statistics}
+
+\paragraph{\texorpdfstring{\textbf{Plots}}{Plots}}\label{plots}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# BoxPlot created to show pre{-}treatment AQ scores}
+\NormalTok{pre\_box }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ p1\_pre\_score, }\AttributeTok{fill =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Pre{-}Treatment AQ Scores"}\NormalTok{,  }\AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"AQ Score (0–50)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{))}
+
+\CommentTok{\# BoxPlot created to show post{-}treatment AQ scores}
+\NormalTok{post\_box }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ p2\_post\_score, }\AttributeTok{fill =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{, }\StringTok{"orange"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Post{-}Treatment AQ Scores"}\NormalTok{,  }\AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"AQ Score (0–50)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{))}
+
+\CommentTok{\# Use ggpbr library to arrange histograms side{-}by{-}side to show difference pre and post treatment}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{ggarrange}\NormalTok{(pre\_box, post\_box, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{common.legend =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{legend =} \StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{CA2_DA_Notebook_files/figure-latex/box plot-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pre{-}treatment AQ scores shows similar median. Post{-}Treatment AQ scores show VR Therapy group noticeably lower indicating greater improvement. Boxes show IQR and whiskers show outliers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summarise and group mean score data by group for creating bar chart}
+\NormalTok{avg\_dep\_scores }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_pre =} \FunctionTok{mean}\NormalTok{(p1\_pre\_score), }\AttributeTok{mean\_post =} \FunctionTok{mean}\NormalTok{(p2\_post\_score), }\AttributeTok{.by =}\NormalTok{ group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(mean\_pre, mean\_post), }\AttributeTok{names\_to =} \StringTok{"time"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"mean\_score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{time =} \FunctionTok{recode}\NormalTok{(time, }\StringTok{"mean\_pre"} \OtherTok{=} \StringTok{"Pre{-}Treatment"}\NormalTok{, }\StringTok{"mean\_post"} \OtherTok{=} \StringTok{"Post{-}Treatment"}\NormalTok{))}
+
+\CommentTok{\# Bar chart created to show mean AQ scores before and after treatment for each group}
+\FunctionTok{ggplot}\NormalTok{(avg\_dep\_scores, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ mean\_score, }\AttributeTok{fill =}\NormalTok{ time)) }\SpecialCharTok{+} \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+} \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average AQ (Depression) Scores by Group"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Therapy Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean AQ Score (0{-}50)"}\NormalTok{ ) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{CA2_DA_Notebook_files/figure-latex/bar chart-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Both CBT and VR Therapy groups show reduced mean AQ scores after treatment}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summarise and group mean score data by time for creating line graph}
+\NormalTok{avg\_dep\_time }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_pre =} \FunctionTok{mean}\NormalTok{(p1\_pre\_score), }\AttributeTok{mean\_post =} \FunctionTok{mean}\NormalTok{(p2\_post\_score), }\AttributeTok{.by =}\NormalTok{ group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(mean\_pre, mean\_post), }\AttributeTok{names\_to =} \StringTok{"time"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"mean\_score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{time =} \FunctionTok{recode}\NormalTok{(time, }\StringTok{"mean\_pre"} \OtherTok{=} \StringTok{"Pre{-}Treatment"}\NormalTok{, }\StringTok{"mean\_post"} \OtherTok{=} \StringTok{"Post{-}Treatment"}\NormalTok{))}
+
+\CommentTok{\# Line graph showing mean AQ scores for each group pre and post treatment}
+\FunctionTok{ggplot}\NormalTok{(avg\_dep\_time, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ mean\_score, }\AttributeTok{group =}\NormalTok{ group, }\AttributeTok{color =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Change in Mean AQ Scores Over Time by Group"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Time Point"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean AQ Score (0{-}50)"}\NormalTok{ ) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{CA2_DA_Notebook_files/figure-latex/line-graph-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Both CBT and VR Therapy groups downward trends from pre{-}treatment to post{-}treatment {-} VR Therapy shows greater reduction }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate pre{-}treatment AQ score distributions across the 3 groups}
+\NormalTok{pre\_hist }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ p1\_pre\_score, }\AttributeTok{fill =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{position =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_pre =} \FunctionTok{mean}\NormalTok{(p1\_pre\_score)), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ mean\_pre, }\AttributeTok{colour =}\NormalTok{ group), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Pre{-}Treatment AQ Score Distribution"}\NormalTok{, }\AttributeTok{x =} \StringTok{"AQ Score (0 {-}50)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Frequency"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{))}
+
+\CommentTok{\# Calculate post{-}treatment AQ score distributions across the 3 groups}
+\NormalTok{post\_hist }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ p2\_post\_score, }\AttributeTok{fill =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_post =} \FunctionTok{mean}\NormalTok{(p2\_post\_score)), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ mean\_post, }\AttributeTok{color =}\NormalTok{ group), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Post{-}Treatment AQ Score Distribution"}\NormalTok{, }\AttributeTok{x =} \StringTok{"AQ Score (0{-}50)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Frequency"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{))}
+
+\CommentTok{\# Use ggpbr library to arrange histograms side{-}by{-}side to show difference pre and post treatment}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{ggarrange}\NormalTok{(pre\_hist, post\_hist, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{common.legend =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{legend =} \StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{CA2_DA_Notebook_files/figure-latex/histograms-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# All groups show similar AQ score pre{-}treatment. Post{-}treatment, both CBT and VR Therapy groups show lower AQ score indicating improvement}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scatterplot showing relationship between pre{-}treatment AQ scores and change in AQ scores post{-}treatment}
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ p1\_pre\_score, }\AttributeTok{y =}\NormalTok{ change\_score, }\AttributeTok{colour =}\NormalTok{ group)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"skyblue"}\NormalTok{, }\StringTok{"lightgreen"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Pre{-}Treatment AQ vs Change in Score"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Pre{-}Treatment AQ Score"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Change in AQ (Pre {-} Post, Positive = Improvement)"}\NormalTok{ ) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{CA2_DA_Notebook_files/figure-latex/scatterplot-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A positive change indicates improvement {-} Participants with higher pre{-}treatment AQ scores tended to have a larger improvement}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{\textbf{Inferential
+Statistics}}{Inferential Statistics}}\label{inferential-statistics}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Assign and filter by group}
+\NormalTok{cbt }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(group }\SpecialCharTok{==} \StringTok{"cbt"}\NormalTok{)}
+\NormalTok{vr }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(group }\SpecialCharTok{==} \StringTok{"vr"}\NormalTok{)}
+\NormalTok{control }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{ (group }\SpecialCharTok{==} \StringTok{"control"}\NormalTok{)}
+
+\CommentTok{\# t{-}test by group}
+\NormalTok{t\_cbt }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(cbt}\SpecialCharTok{$}\NormalTok{p1\_pre\_score, cbt}\SpecialCharTok{$}\NormalTok{p2\_post\_score, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{t\_vr }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(vr}\SpecialCharTok{$}\NormalTok{p1\_pre\_score, vr}\SpecialCharTok{$}\NormalTok{p2\_post\_score, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{t\_control }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(control}\SpecialCharTok{$}\NormalTok{p1\_pre\_score, control}\SpecialCharTok{$}\NormalTok{p2\_post\_score, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Output results of t{-}tests in list}
+\FunctionTok{list}\NormalTok{(}\AttributeTok{CBT =}\NormalTok{ t\_cbt, }\AttributeTok{VR =}\NormalTok{ t\_vr, }\AttributeTok{CONTROL =}\NormalTok{ t\_control)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $CBT
+## 
+##  Paired t-test
+## 
+## data:  cbt$p1_pre_score and cbt$p2_post_score
+## t = 22.899, df = 99, p-value < 2.2e-16
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##   9.215681 10.964319
+## sample estimates:
+## mean difference 
+##           10.09 
+## 
+## 
+## $VR
+## 
+##  Paired t-test
+## 
+## data:  vr$p1_pre_score and vr$p2_post_score
+## t = 37.633, df = 99, p-value < 2.2e-16
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  17.63826 19.60174
+## sample estimates:
+## mean difference 
+##           18.62 
+## 
+## 
+## $CONTROL
+## 
+##  Paired t-test
+## 
+## data:  control$p1_pre_score and control$p2_post_score
+## t = 1.5887, df = 99, p-value = 0.1153
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.1493572  1.3493572
+## sample estimates:
+## mean difference 
+##             0.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Interpretation: }
+\CommentTok{\# CBT {-} significant improvement: t=22.9, p\textless{}.001. Mean diff = 10.99. CI between 9.2{-}11}
+\CommentTok{\# VR {-} Very big improvement: t=37.6, p\textless{}.001. Mean diff = 18.62. CI between 17.6{-}19.6}
+\CommentTok{\# CONTROL {-} no significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 {-} no change}
+
+\CommentTok{\# Results suggest that both CBT and VR reduced AQ scores with VR Therapy having a significant impact}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Assign and filter by groups {-} VR \& Control, CBT \& Control, VR and CBT}
+\NormalTok{vr\_control }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(group }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"vr"}\NormalTok{, }\StringTok{"control"}\NormalTok{))}
+\NormalTok{cbt\_control }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(group }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"cbt"}\NormalTok{, }\StringTok{"control"}\NormalTok{))}
+\NormalTok{vr\_cbt }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(group }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"vr"}\NormalTok{, }\StringTok{"cbt"}\NormalTok{))}
+
+\CommentTok{\# t{-}test between groups {-} VR vs Control | CBT vs Control | VR vs CBT }
+\NormalTok{t\_vr\_control }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(change\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ vr\_control, }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{t\_cbt\_control }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(change\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ cbt\_control, }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{t\_vr\_cbt }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(change\_score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ vr\_cbt, }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Output results of between group t{-}tests in list}
+\FunctionTok{list}\NormalTok{(}\AttributeTok{VR\_vs\_CONTROL =}\NormalTok{ t\_vr\_control, }\AttributeTok{CBT\_vs\_CONTROL =}\NormalTok{ t\_cbt\_control, }\AttributeTok{VR\_vs\_CBT =}\NormalTok{ t\_vr\_cbt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $VR_vs_CONTROL
+## 
+##  Two Sample t-test
+## 
+## data:  change_score by group
+## t = -28.951, df = 198, p-value < 2.2e-16
+## alternative hypothesis: true difference in means between group control and group vr is not equal to 0
+## 95 percent confidence interval:
+##  -19.24746 -16.79254
+## sample estimates:
+## mean in group control      mean in group vr 
+##                  0.60                 18.62 
+## 
+## 
+## $CBT_vs_CONTROL
+## 
+##  Two Sample t-test
+## 
+## data:  change_score by group
+## t = 16.353, df = 198, p-value < 2.2e-16
+## alternative hypothesis: true difference in means between group cbt and group control is not equal to 0
+## 95 percent confidence interval:
+##   8.345572 10.634428
+## sample estimates:
+##     mean in group cbt mean in group control 
+##                 10.09                  0.60 
+## 
+## 
+## $VR_vs_CBT
+## 
+##  Two Sample t-test
+## 
+## data:  change_score by group
+## t = -12.875, df = 198, p-value < 2.2e-16
+## alternative hypothesis: true difference in means between group cbt and group vr is not equal to 0
+## 95 percent confidence interval:
+##  -9.836548 -7.223452
+## sample estimates:
+## mean in group cbt  mean in group vr 
+##             10.09             18.62
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Interpretation: }
+\CommentTok{\# VR vs CONTROL {-} VR improves more than control: t={-}28.95, p\textless{}.001. Mean improvement: VR = 18.62, Control = 0.6. CI between {-}19.25, {-}16.79. 18 point improvement 18.62 {-} 0.6}
+\CommentTok{\# CBT vs CONTROL {-} CBT improves more than control: t=16.35, p\textless{}.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between 8.35, 10.63. 9/10 point improvement 10.09 {-} 0.6}
+\CommentTok{\# VR vs CBT {-} CBT improves more than control: t={-}12.38, p\textless{}.001. Mean improvement: VR = 18.62, CBT = 10.09. CI between {-}9.84, {-}7.22. 7{-}10 point improvement 18.62 {-} 10.09}
+
+\CommentTok{\# Results suggest that both CBT and VR were a significant improvement on the Control group and comparing VR and CBT showed that the VR group achieved a larger improvement}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate the sample mean of change score}
+\NormalTok{mean\_change }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{change\_score)}
+\CommentTok{\# Calculate the standard deviation of change score}
+\NormalTok{sd\_change }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{change\_score)}
+\CommentTok{\# Calculate the number of participants}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(df)}
+\CommentTok{\# Calculate Z{-}value using the formuala}
+\NormalTok{z\_value }\OtherTok{\textless{}{-}}\NormalTok{ (mean\_change }\SpecialCharTok{{-}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (sd\_change }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n))}
+\CommentTok{\# Calculate p{-}value using the Z distribution}
+\NormalTok{p\_value }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\FunctionTok{abs}\NormalTok{(z\_value)))}
+\CommentTok{\# Calculate the Confidence Interval around the mean}
+\NormalTok{error\_margin }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.975}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (sd\_change }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n))}
+\CommentTok{\# Calculate the Lower limits of the CI}
+\NormalTok{ci\_lower }\OtherTok{\textless{}{-}}\NormalTok{ mean\_change }\SpecialCharTok{{-}}\NormalTok{ error\_margin}
+\CommentTok{\# Calculate the Upper limits of the CI}
+\NormalTok{ci\_upper }\OtherTok{\textless{}{-}}\NormalTok{ mean\_change }\SpecialCharTok{+}\NormalTok{ error\_margin}
+\CommentTok{\# Create a table for the results}
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Mean\_Change =} \FunctionTok{round}\NormalTok{(mean\_change, }\DecValTok{2}\NormalTok{), }\AttributeTok{Z\_Value =} \FunctionTok{round}\NormalTok{(z\_value, }\DecValTok{2}\NormalTok{), }\AttributeTok{P\_Value =} \FunctionTok{round}\NormalTok{(p\_value, }\DecValTok{4}\NormalTok{), }\AttributeTok{CI\_Lower =} \FunctionTok{round}\NormalTok{(ci\_lower, }\DecValTok{2}\NormalTok{), }\AttributeTok{CI\_Upper =} \FunctionTok{round}\NormalTok{(ci\_upper, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Mean_Change Z_Value P_Value CI_Lower CI_Upper
+## 1        9.77   19.72       0      8.8    10.74
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Interpretation: }
+\CommentTok{\# The average change in AQ scores across all participants showed a positive value (9.77) meaning that scores decreased after treatment and that participants improved}
+
+\CommentTok{\# The Z score of 19.72 shows that the well above 0 and indicates that improvement is highly unlikely random}
+
+\CommentTok{\# P value is 0, so can reject null hypothesis}
+
+\CommentTok{\# 95\% Confidence Interval of lower as 8.8 and upper limits at 10.74 shows that the true average improvement is narrow and shows consistent treatment effect}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{\texorpdfstring{\textbf{Probability}}{Probability}}\label{probability}
+
+\paragraph{\texorpdfstring{\textbf{Hypothesis
+Testing}}{Hypothesis Testing}}\label{hypothesis-testing}
+
+\paragraph{\texorpdfstring{\textbf{Regresssion
+Analysis}}{Regresssion Analysis}}\label{regresssion-analysis}
+
+\paragraph{\texorpdfstring{\textbf{Confidence
+Interval}}{Confidence Interval}}\label{confidence-interval}
+
+\subsubsection{\texorpdfstring{\textbf{Statistical
+tests}}{Statistical tests}}\label{statistical-tests}
+
+\subsubsection{\texorpdfstring{\textbf{Hypothesis 1
+-}}{Hypothesis 1 -}}\label{hypothesis-1--}
+
+\subsubsection{\texorpdfstring{\textbf{Hypothesis 2
+-}}{Hypothesis 2 -}}\label{hypothesis-2--}
+
+\subsubsection{\texorpdfstring{\textbf{Hypothesis 3
+-}}{Hypothesis 3 -}}\label{hypothesis-3--}
+
+\subsubsection{\texorpdfstring{\textbf{Magnitude and direction of
+results}}{Magnitude and direction of results}}\label{magnitude-and-direction-of-results}
+
+\section{Discussion}\label{discussion}
+
+\textbf{This is from the brief} ``The Autism Spectrum Quotient (AQ) is a
+50-item self report questionnaire with a total score between 0 and 50.1.
+A higher score indicates a greater number of autistic traits. A total
+score os 26 or higher is often used as a threshold to suggest the
+presence of clinically significant autistic traits. Research indicates
+that the majority of individuals with the official autism diagnosis
+score 32 or above. In contrast, the average score for neurotypical males
+is around 17 and for neurotypical females is about 15.6 with males
+tending to score higher than females in the general population''
+
+\subsubsection{Outline findings and relation to the
+hypothesis}\label{outline-findings-and-relation-to-the-hypothesis}
+
+\textbf{Paired t-test results} Undertaken to analyse changes in AQ
+scores pre and post-treatment in each group Question: Is there a
+different in each group pre and post treatment?
+
+\begin{itemize}
+\tightlist
+\item
+  Null hypothesis - No significant difference (pre and post-treatment)
+\item
+  Alternative hypothesis - Significant difference (pre and
+  post-treatment)
+\end{itemize}
+
+CBT - significant improvement: t=22.9, p\textless.001. Mean diff =
+10.99. CI between 9.2-11 VR - Very big improvement: t=37.6,
+p\textless.001. Mean diff = 18.62. CI between 17.6-19.6 CONTROL - no
+significant change: t=1.59, p=0.115. Mean diff = 0.6. CI include 0 - no
+change
+
+Results suggest that both CBT and VR reduced AQ scores with VR Therapy
+having a significant impact
+
+\textbf{Between group t-test results} Undertaken to analyse if there are
+significant differences between AQ score between CBT and VR Therapy
+group Questions: - Is VR Therapy better than no treatment (VR vs
+CONTROL)? - Is CBT better than no treatment (CBT vs CONTROL)? - Is VR
+Therapy more effective than CBT (VR vs CBT)?
+
+\begin{itemize}
+\tightlist
+\item
+  Null hypothesis - No significant difference in mean improvement
+\item
+  Alternative hypothesis - One group differs in mean improvement
+\end{itemize}
+
+VR vs CONTROL - VR improves more than control: t=-28.95, p\textless.001.
+Mean improvement: VR = 18.62, Control = 0.6. CI between -19.25, -16.79.
+18 point improvement 18.62 - 0.6 - Significant improvement
+
+CBT vs CONTROL - CBT improves more than control: t=16.35,
+p\textless.001. Mean improvement: CBT = 10.09, Control = 0.6. CI between
+8.35, 10.63. 9/10 point improvement 10.09 - 0.6 - Significant
+improvement
+
+VR vs CBT - CBT improves more than control: t=-12.38, p\textless.001.
+Mean improvement: VR = 18.62, CBT = 10.09. CI between -9.84, -7.22. 7-10
+point improvement 18.62 - 10.09
+
+Results suggest that both CBT and VR were a significant improvement on
+the Control group and comparing VR and CBT showed that the VR group
+achieved a larger improvement
+
+VR Therapy outperforms CBT and Control, CBT outperforms Control
+
+\textbf{z-test results}
+
+Evaluate whether there is a significant improvement in AQ scores across
+all participants, across all groups and determine whether the overall
+mean change in AQ scores differed significantly from 0
+
+Does the treatment work across all groups and participants?
+
+\begin{itemize}
+\tightlist
+\item
+  Null hypothesis - The mean change in AQ scores equals 0
+\item
+  Alternative hypothesis - The mean change in AQ scores does not equals
+  0
+\end{itemize}
+
+The average change in AQ scores across all participants showed a
+positive value (9.77) meaning that scores decreased after treatment and
+that participants improved
+
+The Z score of 19.72 shows that the well above 0 and indicates that
+improvement is highly unlikely random and shows the strength of the
+evidence
+
+P value is 0, so can reject null hypothesis
+
+95\% Confidence Interval of lower as 8.8 and upper limits at 10.74 shows
+that the true average improvement and the narrow confidence interval
+shows consistent treatment effect across the sample
+
+\paragraph{Limitations}\label{limitations}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{References}\label{references}
+
+Maskey, M., Rodgers, J., Ingham, B., Freeston, M., Evans, G., Labus, M.
+and Parr, J.R. (2019). Using Virtual Reality Environments to Augment
+Cognitive Behavioral Therapy for Fears and Phobias in Autistic Adults.
+Autism in Adulthood, 1(2), pp.134--145.
+\url{doi:https://doi.org/10.1089/aut.2018.0019}.
+
+De Luca, R., Leonardi, S., Portaro, S., Le Cause, M., De Domenico, C.,
+Colucci, P.V., Pranio, F., Bramanti, P. and Calabrò, R.S. (2019).
+Innovative use of virtual reality in autism spectrum disorder: A
+case-study. Applied Neuropsychology: Child, 10(1), pp.90--100.
+\url{doi:https://doi.org/10.1080/21622965.2019.1610964}.
+
+\end{document}
