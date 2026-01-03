@@ -16,12 +16,6 @@ output:
     toc: true
 ---
 
-# Data Analytics for Immersive Environments (COMPC9047)
-
-## Investigating the Impact of Therapeutic Interventions on Austistic Traits using the Autism Spectrum Quotient (AQ)
-
-**Participants:** Brendan Flaherty (D00285274) & Jeremiah Spillane (D00295490) **Module:** Data Analytics for Immersive Environments (COMPC9047) **Date:** `r Sys.Date()`
-
 ------------------------------------------------------------------------
 
 # Abstract 
@@ -45,6 +39,8 @@ Results were gathered by comparing pre- and post-treatment Autism Spectrum Quoti
 
 The findings indicated a statistically notable reduction in AQ scores, suggesting that therapeutic intervention was associated with a measurable change in reported autistic traits across the sample. However, the implications are limited by reliance on self report data and the need to interpret statistical significance cautiously when considering real world or clinical impact.
 
+------------------------------------------------------------------------
+
 # Introduction
 
 ## Topic and Context
@@ -56,7 +52,7 @@ As defined by the World Health Organisation (WHO) "Autism spectrum disorders (AS
 
 This research paper examines changes in Autism Spectrum Quotient (AQ) scores across two parameters. Firstly across time, that is pre-treatment and post-treatmnet over a 12 week period, and secondly, across three groups employing various approaches. These groups employ different approaches, namely 1) cognitive behavioral therapy (CBT) ; 2) virtual reality (VR) and 3) a control group. This study aims to answer whether CBT or VR-based therapy lead to a statistically significant change in AQ scores compared to no treatment, and whether or not one intervention is more effective than the other.
 
-## Hypotesis
+## Hypotheses
 
 Hypothesis 1: After controlling for baseline AQ, there will be no group differences in post-treatment (null-hypothesis).
 
@@ -68,19 +64,17 @@ Hypothesis 3: The VR therapy group will show a statistically significantly great
 
 ## Design
 
-A mixed-design experimental approach was employed, with time (pre-treatment vs post-treatment) as a within-subjects factor and treatment group (CBT, VR, control) as a between-subjects factor. The primary dependent variable was the Autism Spectrum Quotient (AQ) score. AQ measurements were collected at baseline and after a 12-week study period.
+There are several methods for assessing autistic traits, including structured interviews and self-report questionnaires. In this experiment, the severity of autistic traits was assessed using self-report mechanisms. The Autism Spectrum Quotient (AQ) was employed.
 
 ## Materials
 
-Autistic traits were assessed using the Autism Spectrum Quotient (AQ), a 50-item self-report questionnaire with scores ranging from 0 to 50, where higher scores indicate greater expression of autistic traits. The AQ is widely used as a dimensional screening instrument and allows for comparison of changes in trait expression over time.
+The AQ questionnaire is is a 50-item self-report questionnaire with a total score ranging from 0 to 50. A higher score indicates a greater number of autistic traits. The original scoring system gives one point for each answer that aligns with an autistic trait, regardless of the strength of agreement ("slightly agree" or "definitely agree"). AQ measurements were collected at baseline and after a 12-week study period.
 
 ## Procedure
 
 Participants assigned to the CBT group received weekly 50-minute therapy sessions focused on emotional and social regulation. Participants in the VR therapy group engaged in weekly 50-minute VR-based sessions designed to simulate real-world social interactions in a controlled and immersive environment. The control group did not receive any therapeutic intervention during the study period. AQ scores were collected from all participants at the beginning of the study (pre-treatment) and again after 12 weeks (post-treatment).
 
 # Results
-
-### \*\*Data Cleaning\*
 
 ```{r Data Cleaning, message=TRUE, warning=TRUE, paged.print=FALSE}
 # Adding librarys to notebook to run the code correctly
@@ -124,9 +118,7 @@ unique(df$group)
 summary(select(df, p1_pre_score, p2_post_score, change_score))
 ```
 
-### **Descriptive Statistics**
-
-#### **Plots**
+### Descriptive Statistics
 
 ```{r box plot, message=TRUE, warning=TRUE}
 # BoxPlot created to show pre-treatment AQ scores
@@ -165,10 +157,10 @@ ggplot(avg_dep_time, aes(x = time, y = mean_score, group = group, color = group)
 
 ```{r histograms, message=TRUE, warning=TRUE}
 # Calculate pre-treatment AQ score distributions across the 3 groups
-pre_hist <- ggplot(df, aes(x = p1_pre_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.6, position = "identity", color = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_pre = mean(p1_pre_score)), aes(xintercept = mean_pre, colour = group), linetype = "dashed", linewidth = 1) +scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ Score Distribution", x = "AQ Score (0 -50)", y = "Frequency") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+pre_hist <- ggplot(df, aes(x = p1_pre_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.6, position = "identity", color = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_pre = mean(p1_pre_score)), aes(xintercept = mean_pre, colour = group), linetype = "dashed", linewidth = 1) +scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Pre-Treatment AQ Score Distribution", x = "AQ Score (0 -50)", y = "Frequency") + theme_minimal(base_size = 10) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
 # Calculate post-treatment AQ score distributions across the 3 groups
-post_hist <- ggplot(df, aes(x = p2_post_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.7, colour = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_post = mean(p2_post_score)), aes(xintercept = mean_post, color = group), linetype = "dashed", linewidth = 1) + scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Post-Treatment AQ Score Distribution", x = "AQ Score (0-50)", y = "Frequency") + theme_minimal(base_size = 13) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+post_hist <- ggplot(df, aes(x = p2_post_score, fill = group)) + geom_histogram(binwidth = 2, alpha = 0.7, colour = "black") + geom_vline(data = df %>% group_by(group) %>% summarise(mean_post = mean(p2_post_score)), aes(xintercept = mean_post, color = group), linetype = "dashed", linewidth = 1) + scale_fill_manual(values = c("orange", "skyblue", "lightgreen")) + scale_colour_manual(values = c("orange", "skyblue", "lightgreen")) + labs(title = "Post-Treatment AQ Score Distribution", x = "AQ Score (0-50)", y = "Frequency") + theme_minimal(base_size = 10) + theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
 # Use ggpbr library to arrange histograms side-by-side to show difference pre and post treatment
 library(ggpubr)
@@ -186,14 +178,14 @@ ggplot(df, aes(x = p1_pre_score, y = change_score, colour = group)) + geom_point
 
 ```
 
-### **Magnitude and direction of results**
+### Magnitude and direction of results
 
-### **Statistical tests**
+### Statistical tests
 
-### **Inferential Statistics**
+### Inferential Statistics
 
-### **Hypothesis 1**
-**Paired t-test results**
+### Hypothesis 1
+#### Paired t-test results
 
 Paired t-tests were conducted to examine within-group changes in AQ scores across the 12-week intervention period. The CBT group demonstrated a statistically significant reduction in AQ scores, with a mean decrease of 10.09 points (t = 22.9, p < .001). The VR therapy group showed an even larger and more consistent improvement, with a mean reduction of 18.62 points (t = 37.6, p < .001). In contrast, the control group exhibited no significant change over time (mean difference = 0.6; t = 1.59, p = 0.115). These findings support the hypothesis that both CBT and VR therapy reduce AQ scores, while no improvement occurs without intervention.
 
@@ -214,8 +206,8 @@ list(CBT = t_cbt, VR = t_vr, CONTROL = t_control)
 
 ```
 
-### **Hypothesis 2**
-**Between group t-test results**
+### Hypothesis 2
+#### Between group t-test results
 
 Between-group comparisons further demonstrated that both treatment conditions were significantly more effective than the control group. Participants receiving VR therapy showed substantially greater improvement than controls (t = −28.95, p < .001), as did those receiving CBT (t = 16.35, p < .001). Direct comparison between the two interventions revealed that VR therapy produced significantly greater reductions in AQ scores than CBT (t = −12.38, p < .001), indicating superior effectiveness of the VR-based intervention.
 
@@ -236,8 +228,8 @@ list(VR_vs_CONTROL = t_vr_control, CBT_vs_CONTROL = t_cbt_control, VR_vs_CBT = t
 
 ```
 
-### **Hypothesis 3**
-**z-test results**
+### Hypothesis 3
+#### z-test results
 
 A z-test assessing overall change across all participants indicated a significant mean reduction in AQ scores of 9.77 points (z = 19.72, p < .001). The 95% confidence interval (8.8 to 10.74) was narrow, suggesting a consistent treatment effect across the sample. This result confirms that the observed improvements were highly unlikely to be due to chance.
 
@@ -268,7 +260,7 @@ Overall, the findings provide strong evidence that both CBT and VR-based therapy
 
 #### Limitations
 
-These findings must be considered with limitations which include, and are not limited to, (over-)reliance on self-report data and the need to interpret statistical significance cautiously when considering real-world or clinical cases. 
+These findings must be considered with limitations which include, and are not limited to, (over-)reliance on self-report data and the need to interpret statistical significance cautiously when considering real-world or clinical cases. It is important to note, that the AQ questionnaire is a screening tool and not a diagnostic instrument, a total score of 26 or higher is often used as a threshold to suggest the presence of clinically significant autistic traits. Research indicates that the majority of individuals with an official autism diagnosis score 32 or above. In contrast, the average score for neurotypical males is around 17, and for neurotypical females, it is about 15.6 It is also important to note that, on average, males tend to score slightly higher than females in the general population.
 
 ------------------------------------------------------------------------
 
